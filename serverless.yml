@@ -6,9 +6,9 @@ frameworkVersion: "3"
 provider:
   name: aws
   runtime: nodejs18.x
-    apiGateway:
-      restApiId: ${cf:shared-gateway-dev.apiGatewayRestApiId}
-      restApiRootResourceId: !Ref rApiGatewayProducts
+  apiGateway:
+    restApiId: ${cf:shared-gateway-dev.apiGatewayRestApiId}
+    restApiRootResourceId: !Ref rApiGatewayAdmins
 functions:
   admins:
     handler: index.handler
