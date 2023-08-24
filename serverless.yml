@@ -14,7 +14,7 @@ functions:
     handler: index.handler
     events:
       - http:
-          path: !Ref rApiGateWayEmptyPath
+          path: users
           method: get
 
 resources:
@@ -25,10 +25,6 @@ resources:
           ParentId: ${cf:shared-gateway-dev.apiGatewayRestApiRootResourceId}
           PathPart: admins
           RestApiId: ${cf:shared-gateway-dev.apiGatewayRestApiId}
-      rApiGateWayEmptyPath:
-        Type: AWS::ApiGateway::Resource
-        Properties:
-          Path: users
   - Outputs:
       oApiGatewayAdminsId:
         Value:
@@ -37,6 +33,6 @@ resources:
           Name: admins-apigateway
       oApiGatewayAdminUsersId:
         Value:
-          Ref: rApiGateWayEmptyPath
+          Ref: ${self:functions.admins.events.http.path}
         Export:
           Name: users-empty-path
