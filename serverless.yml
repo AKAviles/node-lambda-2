@@ -3,9 +3,6 @@ app: node-lambda-2
 service: node-lambda-2
 frameworkVersion: "3"
 
-custom:
-  emptyPath: users
-
 provider:
   name: aws
   runtime: nodejs18.x
@@ -17,7 +14,7 @@ functions:
     handler: index.handler
     events:
       - http:
-          path: ${self:custom.emptyPath}
+          path: ""
           method: get
 
 resources:
@@ -28,6 +25,11 @@ resources:
           ParentId: ${cf:shared-gateway-dev.apiGatewayRestApiRootResourceId}
           PathPart: admins
           RestApiId: ${cf:shared-gateway-dev.apiGatewayRestApiId}
+      rApiGatewayUsers:
+        Type: AWS::ApiGateway::Resource
+        Properties:
+          ParentId: !Ref rApiGatewayAdmins
+          PathPart: users
   - Outputs:
       oApiGatewayAdminsId:
         Value:
@@ -35,6 +37,7 @@ resources:
         Export:
           Name: admins-apigateway
       oApiGatewayAdminUsersId:
-        Value: ${self:custom.emptyPath}
+        Value:
+          Ref: rApiGatewayUsers
         Export:
           Name: users-empty-path
