@@ -30,4 +30,4 @@ resources:
         Value:
           Ref: rApiGatewayAdmins
         Export:
-          Name: products-apigateway
+          Name: admins-apigateway
