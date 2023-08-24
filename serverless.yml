@@ -1,16 +1,19 @@
 org: akaviles024
 app: node-lambda-2
 service: node-lambda-2
-frameworkVersion: '3'
+frameworkVersion: "3"
 
 provider:
   name: aws
   runtime: nodejs18.x
+  apiGateway:
+    restApiId: ${cf:shared-gateway-dev.apiGatewayRestApiId}
+    restApiRootResourceId: ${cf:shared-gateway-dev.apiGatewayRestApiRootResourceId}
 
 functions:
-  api:
+  admins:
     handler: index.handler
     events:
-      - httpApi:
-          path: /
+      - http:
+          path: users/admins
           method: get
