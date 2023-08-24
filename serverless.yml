@@ -30,6 +30,7 @@ resources:
         Properties:
           ParentId: !Ref rApiGatewayAdmins
           PathPart: users
+          RestApiId: ${cf:shared-gateway-dev.apiGatewayRestApiId}
   - Outputs:
       oApiGatewayAdminsId:
         Value:
