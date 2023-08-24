@@ -6,14 +6,28 @@ frameworkVersion: "3"
 provider:
   name: aws
   runtime: nodejs18.x
-  apiGateway:
-    restApiId: ${cf:shared-gateway-dev.apiGatewayRestApiId}
-    restApiRootResourceId: ${cf:shared-gateway-dev.apiGatewayRestApiRootResourceId}
-
+    apiGateway:
+      restApiId: ${cf:shared-gateway-dev.apiGatewayRestApiId}
+      restApiRootResourceId: !Ref rApiGatewayProducts
 functions:
   admins:
     handler: index.handler
     events:
       - http:
-          path: users/admins
+          path: users
           method: get
+
+resources:
+  - Resources:
+      rApiGatewayAdmins:
+        Type: AWS::ApiGateway::Resource
+        Properties:
+          ParentId: ${cf:shared-gateway-dev.apiGatewayRestApiRootResourceId}
+          PathPart: admins
+          RestApiId: ${cf:shared-gateway-dev.apiGatewayRestApiId}
+  - Outputs:
+      oApiGatewayAdminsId:
+        Value:
+          Ref: rApiGatewayAdmins
+        Export:
+          Name: products-apigateway
