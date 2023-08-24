@@ -35,7 +35,6 @@ resources:
         Export:
           Name: admins-apigateway
       oApiGatewayAdminUsersId:
-        Value:
-          Ref: ${self:custom.emptyPath}
+        Value: ${self:custom.emptyPath}
         Export:
           Name: users-empty-path
