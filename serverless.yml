@@ -3,6 +3,9 @@ app: node-lambda-2
 service: node-lambda-2
 frameworkVersion: "3"
 
+custom:
+  emptyPath: users
+
 provider:
   name: aws
   runtime: nodejs18.x
@@ -14,7 +17,7 @@ functions:
     handler: index.handler
     events:
       - http:
-          path: users
+          path: ${self:custom.emptyPath}
           method: get
 
 resources:
@@ -33,6 +36,6 @@ resources:
           Name: admins-apigateway
       oApiGatewayAdminUsersId:
         Value:
-          Ref: ${self:functions.admins.events.http.path}
+          Ref: ${self:custom.emptyPath}
         Export:
           Name: users-empty-path
